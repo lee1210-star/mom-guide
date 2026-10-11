@@ -23,3 +23,19 @@ h1 { font-size: 38px; line-height: 1.3; margin: 6px 4px 18px; }
 .where b { color: #26302f; }
 .sheet { display: block; width: 100%; height: auto; border-radius: 10px; margin: 14px 0; background: #f7f5f0; }
 .end { background: #e1ebe2; border: 3px solid #2f7547; border-radius: 14px; padding: 16px 20px; text-align: center; font-size: 26px; font-weight: bold; color: #2f7547; margin: 14px 0; }
+.turn { display: none; }
+/* 휴대폰처럼 좁은 화면: 버튼 글씨를 한 줄에 들어가게 */
+@media (max-width: 600px) {
+  body { font-size: 19px; }
+  .wrap { padding: 12px 10px 30px; }
+  h1 { font-size: 30px; }
+  .hint, .tip { font-size: 18px; }
+  .book { padding: 16px 18px; }
+  .book b { font-size: 24px; }
+  .book span, .book i { font-size: 17px; }
+  .nav { border-spacing: 6px 0; margin: 0 -6px; width: 100%; width: -webkit-calc(100% + 12px); width: calc(100% + 12px); }
+  .btn { font-size: 17px; padding: 14px 2px; white-space: nowrap; border-radius: 12px; }
+  .where { font-size: 16px; margin: 8px 0; }
+  .end { font-size: 20px; }
+  .turn { display: block; text-align: center; font-size: 16px; color: #5b6461; margin: 0 0 4px; }
+}
