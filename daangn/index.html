@@ -2,18 +2,68 @@
 <html lang="ko">
 <head>
 <meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <meta name="robots" content="noindex, nofollow">
 <meta name="apple-mobile-web-app-title" content="엄마전용 휴대폰 설명서">
-<title>당근에 물건 팔기 1쪽</title>
-<link rel="stylesheet" href="../style.css?v=1ece688f">
+<title>당근에 물건 팔기</title>
+<link rel="stylesheet" href="../style.css?v=6c33f5a3">
+<noscript><meta http-equiv="refresh" content="0; url=1.html"></noscript>
 </head>
 <body>
-<div class="page-wrap">
-<p class="where">당근에 물건 팔기 · <b>1쪽</b> / 17쪽</p>
-<p class="turn">휴대폰을 옆으로 눕히면 더 크게 보여요</p>
-<div class="sheet-box"><img class="sheet" src="img/p01.png?v=5545ddc3" alt="1쪽: 당근에 물건 팔기"></div>
-<table class="nav"><tr><td><a class="btn" href="../">◀ 목록으로</a></td><td><a class="btn" href="../">처음 화면</a></td><td><a class="btn next" href="2.html">다음 쪽 ▶</a></td></tr></table>
+<div id="stage">
+  <div id="sheetBox"><img id="sheet" src="" alt=""></div>
+  <div id="zonePrev" class="zone"><span class="arrow">◀</span></div>
+  <div id="zoneNext" class="zone"><span class="arrow">▶</span></div>
+  <div id="sideInfo"><div class="count" id="countLabel"></div><div class="track"><div class="fill" id="fillBar"></div></div></div>
+  <p id="whereTitle">당근에 물건 팔기</p>
+  <div id="endBanner" hidden>끝까지 다 보셨어요. 잘하셨어요!</div>
 </div>
+<script>
+(function () {
+  var PAGES = ["img/p01.png?v=5545ddc3", "img/p02.png?v=cd1a1d70", "img/p03.png?v=67a27f9a", "img/p04.png?v=18959101", "img/p05.png?v=10010c5e", "img/p06.png?v=a8264c82", "img/p07.png?v=f0f87b8e", "img/p08.png?v=ace02d0d", "img/p09.png?v=1b92ca49", "img/p10.png?v=556d04c5", "img/p11.png?v=98a009c4", "img/p12.png?v=c3d85d55", "img/p13.png?v=a54aaeb2", "img/p14.png?v=b6a6193b", "img/p15.png?v=1a05e913", "img/p16.png?v=426f8ad0", "img/p17.png?v=9732c3ba"];
+  var TITLES = ["당근에 물건 팔기", "당근 앱 열기", "파는 글 쓰기 시작", "사진 넣기", "제목 쓰기", "가격 쓰기", "자세한 설명 쓰기", "글 올리기", "채팅에 답하기", "송금 요청 보내기", "돈 들어왔는지 보기", "문고리 거래 순서", "이 말이 나오면 멈춰요", "이상한 사람 막기", "사진 한꺼번에 넣기", "글 하나씩 확인하기", "미리 해 둘 것"];
+  var i = 0;
+  var n = PAGES.length;
+  var sheet = document.getElementById('sheet');
+  var count = document.getElementById('countLabel');
+  var fill = document.getElementById('fillBar');
+  var zonePrev = document.getElementById('zonePrev');
+  var zoneNext = document.getElementById('zoneNext');
+  var endBanner = document.getElementById('endBanner');
+  var pre = new Image();
+
+  function render() {
+    sheet.src = PAGES[i];
+    sheet.alt = (i + 1) + '쪽: ' + TITLES[i];
+    count.textContent = (i + 1) + ' / ' + n;
+    fill.style.height = Math.round((i + 1) / n * 100) + '%';
+    zonePrev.className = 'zone' + (i === 0 ? ' off' : '');
+    zoneNext.className = 'zone' + (i === n - 1 ? ' off' : '');
+    endBanner.hidden = (i !== n - 1);
+    if (i + 1 < n) { pre.src = PAGES[i + 1]; }
+    if (i > 0) { pre.src = PAGES[i - 1]; }
+  }
+
+  function tryFullscreen() {
+    try {
+      var el = document.documentElement;
+      if (!document.fullscreenElement && el.requestFullscreen) {
+        el.requestFullscreen().catch(function () {});
+      }
+    } catch (e) {}
+  }
+
+  zoneNext.addEventListener('click', function () {
+    if (i < n - 1) { i++; render(); }
+    tryFullscreen();
+  });
+  zonePrev.addEventListener('click', function () {
+    if (i > 0) { i--; render(); }
+    tryFullscreen();
+  });
+
+  render();
+})();
+</script>
 </body>
 </html>

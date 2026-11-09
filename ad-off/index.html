@@ -2,18 +2,68 @@
 <html lang="ko">
 <head>
 <meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <meta name="robots" content="noindex, nofollow">
 <meta name="apple-mobile-web-app-title" content="엄마전용 휴대폰 설명서">
-<title>광고 문자 · 알림 없애기 1쪽</title>
-<link rel="stylesheet" href="../style.css?v=1ece688f">
+<title>광고 문자 · 알림 없애기</title>
+<link rel="stylesheet" href="../style.css?v=6c33f5a3">
+<noscript><meta http-equiv="refresh" content="0; url=1.html"></noscript>
 </head>
 <body>
-<div class="page-wrap">
-<p class="where">광고 문자 · 알림 없애기 · <b>1쪽</b> / 11쪽</p>
-<p class="turn">휴대폰을 옆으로 눕히면 더 크게 보여요</p>
-<div class="sheet-box"><img class="sheet" src="img/p01.png?v=d78ab0e2" alt="1쪽: 사랑하는 엄마께"></div>
-<table class="nav"><tr><td><a class="btn" href="../">◀ 목록으로</a></td><td><a class="btn" href="../">처음 화면</a></td><td><a class="btn next" href="2.html">다음 쪽 ▶</a></td></tr></table>
+<div id="stage">
+  <div id="sheetBox"><img id="sheet" src="" alt=""></div>
+  <div id="zonePrev" class="zone"><span class="arrow">◀</span></div>
+  <div id="zoneNext" class="zone"><span class="arrow">▶</span></div>
+  <div id="sideInfo"><div class="count" id="countLabel"></div><div class="track"><div class="fill" id="fillBar"></div></div></div>
+  <p id="whereTitle">광고 문자 · 알림 없애기</p>
+  <div id="endBanner" hidden>끝까지 다 보셨어요. 잘하셨어요!</div>
 </div>
+<script>
+(function () {
+  var PAGES = ["img/p01.png?v=d78ab0e2", "img/p02.png?v=3ea7a0fd", "img/p03.png?v=0360eda7", "img/p04.png?v=823037cf", "img/p05.png?v=dc96a2e2", "img/p06.png?v=2b011fc6", "img/p07.png?v=8f3599f3", "img/p08.png?v=a77a1e9a", "img/p09.png?v=d3a1e1da", "img/p10.png?v=8ca74eb7", "img/p11.png?v=c24d2680"];
+  var TITLES = ["사랑하는 엄마께", "광고는 두 군데로 와요", "문자 앱 열기", "(광고) 문자 알아보기", "(광고) 문자 지우기", "같은 곳에서 또 안 오게 막기 (차단)", "광고 알림 찾아서 꾹 누르기", "스위치를 눌러 알림 끄기", "알림이 사라졌을 때: 설정에서 끄기", "눌러도 되는 것, 누르면 안 되는 것", "자녀분께 드리는 메모"];
+  var i = 0;
+  var n = PAGES.length;
+  var sheet = document.getElementById('sheet');
+  var count = document.getElementById('countLabel');
+  var fill = document.getElementById('fillBar');
+  var zonePrev = document.getElementById('zonePrev');
+  var zoneNext = document.getElementById('zoneNext');
+  var endBanner = document.getElementById('endBanner');
+  var pre = new Image();
+
+  function render() {
+    sheet.src = PAGES[i];
+    sheet.alt = (i + 1) + '쪽: ' + TITLES[i];
+    count.textContent = (i + 1) + ' / ' + n;
+    fill.style.height = Math.round((i + 1) / n * 100) + '%';
+    zonePrev.className = 'zone' + (i === 0 ? ' off' : '');
+    zoneNext.className = 'zone' + (i === n - 1 ? ' off' : '');
+    endBanner.hidden = (i !== n - 1);
+    if (i + 1 < n) { pre.src = PAGES[i + 1]; }
+    if (i > 0) { pre.src = PAGES[i - 1]; }
+  }
+
+  function tryFullscreen() {
+    try {
+      var el = document.documentElement;
+      if (!document.fullscreenElement && el.requestFullscreen) {
+        el.requestFullscreen().catch(function () {});
+      }
+    } catch (e) {}
+  }
+
+  zoneNext.addEventListener('click', function () {
+    if (i < n - 1) { i++; render(); }
+    tryFullscreen();
+  });
+  zonePrev.addEventListener('click', function () {
+    if (i > 0) { i--; render(); }
+    tryFullscreen();
+  });
+
+  render();
+})();
+</script>
 </body>
 </html>
