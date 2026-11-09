@@ -6,7 +6,7 @@
 <meta name="robots" content="noindex, nofollow">
 <meta name="apple-mobile-web-app-title" content="엄마전용 휴대폰 설명서">
 <title>광고 문자 · 알림 없애기</title>
-<link rel="stylesheet" href="../style.css?v=81968569">
+<link rel="stylesheet" href="../style.css?v=86369bb9">
 <noscript><meta http-equiv="refresh" content="0; url=1.html"></noscript>
 </head>
 <body>
@@ -61,6 +61,27 @@
     if (i > 0) { i--; render(); }
     tryFullscreen();
   });
+
+  // 화면을 손가락으로 밀어도 쪽이 넘어가게 (너무 예민하지 않게 일정 거리 이상 밀어야 넘어감)
+  var stage = document.getElementById('stage');
+  var touchX = 0, touchY = 0, touching = false;
+  var SWIPE_MIN = 70;
+  stage.addEventListener('touchstart', function (e) {
+    if (e.changedTouches.length !== 1) { touching = false; return; }
+    touching = true;
+    touchX = e.changedTouches[0].clientX;
+    touchY = e.changedTouches[0].clientY;
+  }, { passive: true });
+  stage.addEventListener('touchend', function (e) {
+    if (!touching) { return; }
+    touching = false;
+    var dx = e.changedTouches[0].clientX - touchX;
+    var dy = e.changedTouches[0].clientY - touchY;
+    if (Math.abs(dx) < SWIPE_MIN || Math.abs(dx) < Math.abs(dy) * 1.3) { return; }
+    if (dx < 0 && i < n - 1) { i++; render(); }
+    else if (dx > 0 && i > 0) { i--; render(); }
+    tryFullscreen();
+  }, { passive: true });
 
   render();
 })();
